@@ -65,7 +65,6 @@ Click the extension icon in the toolbar → click **Clear Active Header**
 |---|---|
 | Overlay not appearing | Make sure you fully removed the old version and loaded fresh via Load unpacked |
 | "No Mod Header found" | The user may not have a Mod Header set in admin |
-| Extension error on page | You may be clicking inside a chat widget (Freshchat iframe) — select the email from the main ticket area instead |
 
 ---
 

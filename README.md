@@ -9,7 +9,7 @@
 When you're on a Freshdesk ticket and need to set a Mod Header for a user:
 
 - **Before:** Open admin page → find Mod Headers row → copy value → open ModHeader extension → paste manually
-- **After:** Highlight the user's email → Change the frame focus to mod_header popup by clicking inside the popup email -> click **Fetch & Apply** → done
+- **After:** Highlight the user's email → click **Fetch & Apply** → done
 
 ---
 
@@ -37,9 +37,8 @@ When you're on a Freshdesk ticket and need to set a Mod Header for a user:
 1. Open any **Freshdesk support ticket**
 2. **Highlight / select** the user's email address on the page
 3. An overlay appears at the bottom-right corner
-4. Change the frame focus to mod_header popup by clicking inside the popup email
-5. Click **Fetch & Apply** — the extension opens the BrowserStack admin page briefly, grabs the Mod Header value, applies it to all requests, then closes
-6. Click **Cancel** if you just wanted to copy the email for something else
+4. Click **Fetch & Apply** — the extension opens the BrowserStack admin page briefly, grabs the Mod Header value, applies it to all requests, then closes
+5. Click **Cancel** if you just wanted to copy the email for something else
    
 The header `X-Auth-override` will be active on all your browser requests until you clear it.
 

@@ -9,7 +9,7 @@
 When you're on a Freshdesk ticket and need to set a Mod Header for a user:
 
 - **Before:** Open admin page → find Mod Headers row → copy value → open ModHeader extension → paste manually
-- **After:** Highlight the user's email → click **Fetch & Apply** → done
+- **After:** Highlight the user's email → Change the frame focus to mod_header popup by clicking inside the popup email -> click **Fetch & Apply** → done
 
 ---
 

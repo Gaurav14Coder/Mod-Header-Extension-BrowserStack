@@ -70,5 +70,5 @@ Click the extension icon in the toolbar → click **Clear Active Header**
 ---
 
 ## Feedback & Issues
-
-For any issues or feedback, contact gaurav.si@browserstack.com or drop a comment on the GitHub repo.
+Found a bug or want a feature?
+👉 [Open a GitHub Issue](https://github.com/Gaurav14Coder/AUT_MOD_HEADER/issues/new) or contact gaurav.si@browserstack.com or drop a comment on the GitHub repo.

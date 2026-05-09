@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "AUT MOD HEADER",
+  "name": "MOD HEADER BrowserStack",
   "version": "2.0",
   "description": "Select a user email to fetch and apply their Mod Header",
   "permissions": [

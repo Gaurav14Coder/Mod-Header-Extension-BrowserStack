@@ -21,11 +21,11 @@ When you're on a Freshdesk ticket and need to set a Mod Header for a user:
 
 **Steps**
 
-1. Download and unzip `AUT_MOD_HEADER_v2.zip`
+1. Download and unzip `MOD_HEADER_BROWSERSTACK.zip`
 2. Open Chrome and go to `chrome://extensions`
 3. Enable **Developer mode** (toggle in top-right corner)
 4. Click **Load unpacked**
-5. Select the unzipped `AUT_MOD_HEADER_v2` folder
+5. Select the unzipped `MOD_HEADER_BROWSERSTACK` folder
 6. The extension will appear in your toolbar
 
 > ⚠️ If you're updating from an older version, click **Remove** first before loading the new one. Do not just hit the reload button.

@@ -44,7 +44,7 @@ chrome.tabs.create({ url, active: false }, (tab) => {
         }).catch(() => {});
       }
     }
-  }, 5000);
+  }, 15000);
 });
   }
 

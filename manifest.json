@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AUT MOD HEADER",
-  "version": "1.0",
+  "version": "2",
   "description": "Select a user email to fetch and apply their Mod Header",
   "permissions": [
     "tabs",
@@ -24,8 +24,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*", "http://*/*"],
-      "js": ["content.js"],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
       "all_frames": false
     }
   ],

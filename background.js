@@ -9,23 +9,43 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 
     const url = `https://www.browserstack.com/admin/user_stats?utf8=%E2%9C%93&q=${encodeURIComponent(email)}&column_selected=Email&commit=Go`;
 
-    chrome.tabs.create({ url, active: false }, (tab) => {
-      const adminTabId = tab.id;
-      tabMap[adminTabId] = { sourceTabId, email };
+chrome.tabs.create({ url, active: false }, (tab) => {
+  const adminTabId = tab.id;
+  tabMap[adminTabId] = { sourceTabId, email };
+  let scriptRan = false;
 
-      chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
-        if (tabId === adminTabId && info.status === "complete") {
-          chrome.tabs.onUpdated.removeListener(listener);
+  function runScript() {
+    if (scriptRan) return;
+    scriptRan = true;
+    chrome.scripting.executeScript({
+      target: { tabId: adminTabId },
+      func: extractHeader
+    }).catch(() => {});
+  }
 
-          setTimeout(() => {
-            chrome.scripting.executeScript({
-              target: { tabId: adminTabId },
-              func: extractHeader
-            });
-          }, 1500);
-        }
-      });
-    });
+  chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
+    if (tabId === adminTabId && info.status === "complete") {
+      chrome.tabs.onUpdated.removeListener(listener);
+      setTimeout(runScript, 800);
+    }
+  });
+
+  setTimeout(() => {
+    if (!scriptRan) {
+      scriptRan = true;
+      const entry = tabMap[adminTabId];
+      if (entry) {
+        chrome.tabs.remove(adminTabId).catch(() => {});
+        delete tabMap[adminTabId];
+        chrome.tabs.sendMessage(entry.sourceTabId, {
+          type: "HEADER_RESULT",
+          success: false,
+          debugInfo: "Admin page timed out."
+        }).catch(() => {});
+      }
+    }
+  }, 10000);
+});
   }
 
   if (msg.type === "HEADER_RESULT") {

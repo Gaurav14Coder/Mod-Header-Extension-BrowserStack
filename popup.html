@@ -5,7 +5,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      width: 300px;
+      width: 240px;
       background: #1a1a2e;
       color: #e0e0e0;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -13,93 +13,45 @@
     }
     .header {
       background: #16213e;
-      padding: 14px 16px;
-      border-bottom: 1px solid #0f3460;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .header-icon { font-size: 20px; }
-    .header-title { font-weight: 600; font-size: 14px; color: #fff; }
-    .header-subtitle { font-size: 11px; color: #888; }
-    .content { padding: 16px; }
-    .status-card {
-      background: #0f3460;
-      border-radius: 8px;
       padding: 12px 14px;
-      margin-bottom: 14px;
+      border-bottom: 1px solid #0f3460;
     }
+    .header-title { font-weight: 700; font-size: 13px; color: #f26522; }
+    .header-subtitle { font-size: 11px; color: #888; margin-top: 2px; }
+    .content { padding: 14px; }
     .status-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #888;
-      margin-bottom: 6px;
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1px; color: #888; margin-bottom: 6px;
     }
-    .status-active { color: #4ade80; font-weight: 600; }
-    .status-inactive { color: #f87171; font-weight: 600; }
-    .header-name {
-      font-size: 11px;
-      color: #93c5fd;
-      margin-top: 6px;
-      word-break: break-all;
-    }
+    .status-active { color: #4ade80; font-weight: 700; font-size: 13px; }
+    .status-inactive { color: #f87171; font-weight: 700; font-size: 13px; }
     .header-value {
-      font-size: 12px;
-      color: #fff;
-      font-family: monospace;
-      background: #1a1a2e;
-      padding: 6px 8px;
-      border-radius: 4px;
-      margin-top: 6px;
-      word-break: break-all;
+      font-size: 13px; color: #fff; font-family: monospace;
+      font-weight: 700; background: #0f172a;
+      padding: 8px; border-radius: 6px;
+      margin-top: 8px; word-break: break-all;
+      display: none;
     }
     .btn-clear {
-      width: 100%;
-      padding: 10px;
-      background: #dc2626;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
+      width: 100%; padding: 10px; margin-top: 14px;
+      background: #dc2626; color: white; border: none;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
     }
-    .btn-clear:hover { background: #b91c1c; }
-    .btn-clear:disabled { background: #444; cursor: not-allowed; }
-    .instructions {
-      background: #16213e;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 11px;
-      color: #aaa;
-      line-height: 1.7;
-      margin-bottom: 14px;
-    }
-    .instructions strong { color: #93c5fd; }
+    .btn-clear:disabled { background: #333; color: #666; cursor: not-allowed; }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="header-icon">😎</div>
-    <div>
-      <div class="header-title">BrowserStack Header Tool</div>
-      <div class="header-subtitle">Auto header injection</div>
-    </div>
+    <div class="header-title">AUT MOD HEADER</div>
+    <div class="header-subtitle">Mod header injection</div>
   </div>
   <div class="content">
-    <div class="status-card">
-      <div class="status-label">Current Status</div>
-      <div id="status-text" class="status-inactive">Loading...</div>
-      <div id="header-info" style="display:none">
-        <div class="header-name" id="header-name"></div>
-        <div class="header-value" id="header-value"></div>
-      </div>
-    </div>
+    <div class="status-label">Current Status</div>
+    <div id="status-text" class="status-inactive">⭕ Mod_Header_Inactive</div>
+    <div class="header-value" id="header-value"></div>
     <button class="btn-clear" id="btn-clear" disabled>Clear Active Header</button>
   </div>
-
   <script src="popup.js"></script>
 </body>
 </html>

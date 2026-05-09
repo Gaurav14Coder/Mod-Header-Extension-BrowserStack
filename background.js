@@ -44,7 +44,7 @@ chrome.tabs.create({ url, active: false }, (tab) => {
         }).catch(() => {});
       }
     }
-  }, 10000);
+  }, 5000);
 });
   }
 
@@ -180,7 +180,7 @@ function extractHeader() {
   }
 
   let attempts = 0;
-  const maxAttempts = 24;
+  const maxAttempts = 6;
 
   const interval = setInterval(() => {
     attempts++;

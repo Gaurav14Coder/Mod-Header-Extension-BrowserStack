@@ -68,13 +68,10 @@ function showConfirmOverlay(email) {
 
     isFetching = true;
 
-    // REMOVE the confirm overlay immediately
     overlay.remove();
 
-    // Clear text selection
     setTimeout(() => window.getSelection().removeAllRanges(), 0);
 
-    // Show a fresh fetching overlay
     const fetchEl = document.createElement("div");
     fetchEl.id = "bs-header-overlay";
     Object.assign(fetchEl.style, {
@@ -129,4 +126,4 @@ function showStatusOverlay(heading, value, bgColor) {
   }, 6000);
 }
 
-} // end guard
+} 

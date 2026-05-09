@@ -1,4 +1,4 @@
-# AUT MOD HEADER
+# MOD HEADER BROWSERSTACK
 
 > A Chrome extension that instantly fetch and apply Mod Headers from the admin panel — without any manual copy-paste.
 

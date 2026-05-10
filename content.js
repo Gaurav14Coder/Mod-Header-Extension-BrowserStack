@@ -46,7 +46,7 @@ function showConfirmOverlay(email) {
   });
 
   overlay.innerHTML =
-    '<div style="color:#f26522;font-weight:700;font-size:13px;margin-bottom:12px;">AUT MOD HEADER</div>' +
+    '<div style="color:#f26522;font-weight:700;font-size:13px;margin-bottom:12px;">MOD HEADER</div>' +
     '<div style="display:flex;gap:8px;">' +
       '<button id="bs-apply-btn" style="flex:1;padding:10px;background:#f26522;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">Fetch &amp; Apply</button>' +
       '<button id="bs-cancel-btn" style="padding:10px 14px;background:#374151;color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer;">Cancel</button>' +

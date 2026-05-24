@@ -10,9 +10,17 @@ document.addEventListener("mouseup", (e) => {
   if (isFetching) return;
 
   const selectedText = window.getSelection().toString().trim();
+
+  // Check for mod header pattern: numbers with underscore (e.g., 43434343_4367788)
+  const modHeaderRegex = /^\d+_\d+$/;
+  if (modHeaderRegex.test(selectedText)) {
+    showConfirmOverlay(selectedText, true);
+    return;
+  }
+
   const emailRegex = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
   if (emailRegex.test(selectedText)) {
-    showConfirmOverlay(selectedText);
+    showConfirmOverlay(selectedText, false);
   }
 });
 
@@ -29,7 +37,7 @@ chrome.runtime.onMessage.addListener((msg) => {
   }
 });
 
-function showConfirmOverlay(email) {
+function showConfirmOverlay(value, isDirectModHeader) {
   const existing = document.getElementById("bs-header-overlay");
   if (existing) existing.remove();
 
@@ -45,10 +53,12 @@ function showConfirmOverlay(email) {
     border: "1px solid #f26522", pointerEvents: "all"
   });
 
+  const buttonText = isDirectModHeader ? "Apply" : "Fetch &amp; Apply";
+
   overlay.innerHTML =
     '<div style="color:#f26522;font-weight:700;font-size:13px;margin-bottom:12px;">MOD HEADER</div>' +
     '<div style="display:flex;gap:8px;">' +
-      '<button id="bs-apply-btn" style="flex:1;padding:10px;background:#f26522;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">Fetch &amp; Apply</button>' +
+      '<button id="bs-apply-btn" style="flex:1;padding:10px;background:#f26522;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">' + buttonText + '</button>' +
       '<button id="bs-cancel-btn" style="padding:10px 14px;background:#374151;color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer;">Cancel</button>' +
     '</div>';
 
@@ -66,34 +76,47 @@ function showConfirmOverlay(email) {
     e.preventDefault();
     e.stopPropagation();
 
-    isFetching = true;
-
     overlay.remove();
 
+    // Clear text selection
     setTimeout(() => window.getSelection().removeAllRanges(), 0);
 
-    const fetchEl = document.createElement("div");
-    fetchEl.id = "bs-header-overlay";
-    Object.assign(fetchEl.style, {
-      position: "fixed", bottom: "20px", right: "20px",
-      background: "#1e293b", color: "#fff",
-      padding: "14px 18px", borderRadius: "12px",
-      fontSize: "13px", fontFamily: "sans-serif",
-      zIndex: 2147483647,
-      boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
-      border: "1px solid #f26522"
-    });
-    fetchEl.innerHTML =
-      '<div style="color:#f26522;font-weight:700;font-size:13px;margin-bottom:8px;">AUT MOD HEADER</div>' +
-      '<div style="color:#aaa;font-size:12px;font-family:monospace;">⏳ Fetching Mod Header...</div>';
-    document.body.appendChild(fetchEl);
+    if (isDirectModHeader) {
+      // Direct mod header - apply directly without fetching
+      try {
+        chrome.runtime.sendMessage({ type: "APPLY_MANUAL_HEADER", header: value });
+        navigator.clipboard.writeText(value);
+        showStatusOverlay("Header Applied — Copied to clipboard", value, "#145214");
+      } catch(e) {
+        showStatusOverlay("Error", "Extension reloaded — refresh the page.", "#7a3010");
+      }
+    } else {
+      // Email - fetch from background
+      isFetching = true;
 
-    try {
-      chrome.runtime.sendMessage({ type: "FETCH_HEADER", email });
-    } catch(e) {
-      isFetching = false;
-      fetchEl.remove();
-      showStatusOverlay("Error", "Extension reloaded — refresh the page.", "#7a3010");
+      // Show a fresh fetching overlay
+      const fetchEl = document.createElement("div");
+      fetchEl.id = "bs-header-overlay";
+      Object.assign(fetchEl.style, {
+        position: "fixed", bottom: "20px", right: "20px",
+        background: "#1e293b", color: "#fff",
+        padding: "14px 18px", borderRadius: "12px",
+        fontSize: "13px", fontFamily: "sans-serif",
+        zIndex: 2147483647,
+        boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+        border: "1px solid #f26522"
+      });
+      fetchEl.innerHTML =
+        '<div style="color:#aaa;font-size:12px;font-family:monospace;">⏳ Fetching Mod Header...</div>';
+      document.body.appendChild(fetchEl);
+
+      try {
+        chrome.runtime.sendMessage({ type: "FETCH_HEADER", email: value });
+      } catch(e) {
+        isFetching = false;
+        fetchEl.remove();
+        showStatusOverlay("Error", "Extension reloaded — refresh the page.", "#7a3010");
+      }
     }
   });
 }
@@ -126,4 +149,4 @@ function showStatusOverlay(heading, value, bgColor) {
   }, 6000);
 }
 
-} 
+} // end guard

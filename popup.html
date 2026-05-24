@@ -39,11 +39,35 @@
       cursor: pointer;
     }
     .btn-clear:disabled { background: #333; color: #666; cursor: not-allowed; }
+    .manual-section {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #0f3460;
+    }
+    .manual-label {
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 1px; color: #888; margin-bottom: 6px;
+    }
+    .manual-input {
+      width: 100%; padding: 10px;
+      background: #0f172a; color: #fff; border: 1px solid #0f3460;
+      border-radius: 6px; font-size: 13px; font-family: monospace;
+      outline: none;
+    }
+    .manual-input:focus { border-color: #f26522; }
+    .divider {
+      display: flex; align-items: center; margin: 14px 0;
+      color: #888; font-size: 11px;
+    }
+    .divider::before, .divider::after {
+      content: ""; flex: 1; height: 1px; background: #0f3460;
+    }
+    .divider span { padding: 0 8px; }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="header-title">HEADER</div>
+    <div class="header-title">Header</div>
     <div class="header-subtitle">Mod header injection</div>
   </div>
   <div class="content">
@@ -51,6 +75,11 @@
     <div id="status-text" class="status-inactive">⭕ Mod_Header_Inactive</div>
     <div class="header-value" id="header-value"></div>
     <button class="btn-clear" id="btn-clear" disabled>Clear Active Header</button>
+    <div class="divider"><span>OR</span></div>
+    <div class="manual-section">
+      <div class="manual-label">Enter Header Value</div>
+      <input type="text" class="manual-input" id="manual-input" placeholder="Enter header value & press Enter...">
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>

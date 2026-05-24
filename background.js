@@ -73,6 +73,15 @@ chrome.tabs.create({ url, active: false }, (tab) => {
     clearHeader();
   }
 
+  if (msg.type === "APPLY_MANUAL_HEADER") {
+    applyHeaderToAllRequests(msg.header, null).then(() => {
+      chrome.runtime.sendMessage({ type: "MANUAL_HEADER_APPLIED", success: true });
+    }).catch((err) => {
+      chrome.runtime.sendMessage({ type: "MANUAL_HEADER_APPLIED", success: false, error: err.message });
+    });
+    return true;
+  }
+
   if (msg.type === "GET_ACTIVE_HEADER") {
     chrome.storage.local.get(["activeHeader"], (data) => {
       chrome.runtime.sendMessage({ type: "ACTIVE_HEADER", header: data.activeHeader || null });
@@ -114,22 +123,26 @@ async function applyHeaderToAllRequests(rawHeader, sourceTabId) {
       activeHeader: { name: headerName, value: headerValue, raw: rawHeader }
     });
 
-    chrome.tabs.sendMessage(sourceTabId, {
-      type: "HEADER_RESULT",
-      success: true,
-      header: rawHeader,
-      name: headerName,
-      value: headerValue
-    });
+    if (sourceTabId) {
+      chrome.tabs.sendMessage(sourceTabId, {
+        type: "HEADER_RESULT",
+        success: true,
+        header: rawHeader,
+        name: headerName,
+        value: headerValue
+      });
+    }
 
   } catch (err) {
     console.error("[BS Header Tool] Rule error:", err);
-    chrome.tabs.sendMessage(sourceTabId, {
-      type: "HEADER_RESULT",
-      success: false,
-      header: rawHeader,
-      debugInfo: "Failed to set rule: " + err.message
-    });
+    if (sourceTabId) {
+      chrome.tabs.sendMessage(sourceTabId, {
+        type: "HEADER_RESULT",
+        success: false,
+        header: rawHeader,
+        debugInfo: "Failed to set rule: " + err.message
+      });
+    }
   }
 }
 

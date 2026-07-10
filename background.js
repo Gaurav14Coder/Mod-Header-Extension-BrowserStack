@@ -3,6 +3,12 @@ const RULE_ID = 1;
 
 chrome.runtime.onMessage.addListener((msg, sender) => {
 
+  if (msg.type === "OPEN_ADMIN") {
+    const url = `https://www.browserstack.com/admin/user_stats?utf8=%E2%9C%93&q=${encodeURIComponent(msg.email)}&column_selected=Email&commit=Go`;
+    chrome.tabs.create({ url, active: true });
+  }
+
+
   if (msg.type === "FETCH_HEADER") {
     const email = msg.email;
     const sourceTabId = sender.tab.id;

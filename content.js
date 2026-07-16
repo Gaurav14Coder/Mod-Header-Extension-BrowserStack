@@ -27,7 +27,6 @@ chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === "HEADER_RESULT") {
     isFetching = false;
     if (msg.success) {
-      try { navigator.clipboard.writeText(msg.value); } catch(e) {}
       showStatusOverlay("Header Applied — Copied to clipboard", msg.value, "#145214");
     } else {
       showStatusOverlay("Not Found", "No Mod Header found for this user.", "#7a3010");
@@ -157,4 +156,4 @@ function showStatusOverlay(heading, value, bgColor) {
   }, 6000);
 }
 
-}
+} 

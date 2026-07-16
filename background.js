@@ -1,3 +1,7 @@
+chrome.action.onClicked.addListener((tab) => {
+  chrome.sidePanel.open({ tabId: tab.id });
+});
+
 const tabMap = {};
 const RULE_ID = 1;
 
@@ -129,15 +133,33 @@ async function applyHeaderToAllRequests(rawHeader, sourceTabId) {
       activeHeader: { name: headerName, value: headerValue, raw: rawHeader }
     });
 
-    if (sourceTabId) {
-      chrome.tabs.sendMessage(sourceTabId, {
-        type: "HEADER_RESULT",
-        success: true,
-        header: rawHeader,
-        name: headerName,
-        value: headerValue
+   if (sourceTabId) {
+  chrome.scripting.executeScript({
+    target: { tabId: sourceTabId },
+    func: (val) => {
+      navigator.clipboard.writeText(val).catch(() => {
+        const el = document.createElement('textarea');
+        el.value = val;
+        el.style.position = 'fixed';
+        el.style.opacity = '0';
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
       });
-    }
+    },
+    args: [headerValue]
+  }).catch(() => {});
+
+  chrome.tabs.sendMessage(sourceTabId, {
+    type: "HEADER_RESULT",
+    success: true,
+    header: rawHeader,
+    name: headerName,
+    value: headerValue
+  });
+}
 
   } catch (err) {
     console.error("[BS Header Tool] Rule error:", err);
